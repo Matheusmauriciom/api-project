@@ -3,88 +3,89 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/assets/style/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     />
-    <title>Project API</title>
+    <link rel="stylesheet" href="/assets/style/style.css" />
+    <title>teste</title>
   </head>
+
   <body>
     <main id="container">
-      <header>
-        <form action="" id="search">
-          <i class="fa-solid fa-location-dot"></i>
-          <input
-            type="search"
-            name="city_name"
-            id="city_name"
-            placeholder="Buscar cidade"
-          />
-          <button type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </form>
-      </header>
+      <form action="" id="search">
+        <i class="fa-solid fa-location-dot"></i>
+        <input
+          type="search"
+          name="city_name"
+          id="city_name"
+          placeholder="Buscar cidade"
+        />
+        <button type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
 
-      <section id="weather">
-        <article>
-          <h1>
-            <span id="title">Nome da cidade</span>
-            <img src="" alt="Bandeira do país" id="country_flag" />
-          </h1>
+      <div id="weather">
+        <h1>
+          <span id="title">Nome da cidade </span>
+          <img src="" alt="Bandeira do país" id="country_flag" />
+        </h1>
 
-          <div id="time-date">
-            <p id="local-time">20:00</p>
-            <p id="local-data">01/01/2025</p>
-          </div>
+        <div id="time-date">
+          <p id="local-time"></p>
+          <p id="local-date"></p>
+        </div>
 
-          <div id="infos">
-            <div id="temp_img">
-              <img
-                src="https://openweathermap.org/img/wn/01d@2x.png"
-                alt="icone previsão"
-              />
-            </div>
+        <div id="infos">
+          <div id="temp">
+            <img
+              id="temp_img"
+              src="https://openweathermap.org/img/wn/01d@2x.png"
+              alt=""
+            />
             <div>
-              <p id="temp_value">20C°</p>
+              <p id="temp_value">--C°</p>
               <p id="temp_description">Descrição do tempo</p>
             </div>
-            <div id="other_infos">
-              <div class="info">
-                <i id="temp_max_icon" class="fa-solid fa-temperature-high"></i>
-                <div>
-                  <h2>Temp. max</h2>
-                  <p id="temp_max">30 <sup>C°</sup></p>
-                </div>
+          </div>
+
+          <div id="other_infos">
+            <div class="info">
+              <i id="temp_max_icon" class="fa-solid fa-temperature-high"></i>
+              <div>
+                <h2>Temp. max</h2>
+                <p id="temp_max">-- <sup>C°</sup></p>
               </div>
-              <div class="info">
-                <i id="temp_min_icon" class="fa-solid fa-temperature-low"></i>
-                <div>
-                  <h2>Temp. min</h2>
-                  <p id="temp_min">10 <sup>C°</sup></p>
-                </div>
+            </div>
+            <div class="info">
+              <i id="temp_min_icon" class="fa-solid fa-temperature-low"></i>
+              <div>
+                <h2>Temp. min</h2>
+                <p id="temp_min">-- <sup>C°</sup></p>
               </div>
-              <div class="info">
-                <i id="humidity_icon" class="fa-solid fa-droplet"></i>
-                <div>
-                  <h2>Humidade</h2>
-                  <p id="humidity">5%</p>
-                </div>
+            </div>
+            <div class="info">
+              <i id="humidity_icon" class="fa-solid fa-droplet"></i>
+              <div>
+                <h2>Humidade</h2>
+                <p id="humidity">--%</p>
               </div>
-              <div class="info">
-                <i id="wind_icon" class="fa-solid fa-wind"></i>
-                <div>
-                  <h2>Vento</h2>
-                  <p id="wind">20 km/h</p>
-                </div>
+            </div>
+            <div class="info">
+              <i id="wind_icon" class="fa-solid fa-wind"></i>
+              <div>
+                <h2>Vento</h2>
+                <p id="wind">-- km/h</p>
               </div>
             </div>
           </div>
-        </article>
-      </section>
+        </div>
+      </div>
 
-      <aside id="alert"></aside>
+      <div id="alert"></div>
     </main>
+
+    <script src="/assets/four.js"></script>
   </body>
 </html>
