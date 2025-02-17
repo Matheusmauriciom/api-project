@@ -41,45 +41,83 @@ async function testTimezoneAPI() {
   const lat = -23.5505;
   const lon = -46.6333;
   const url = `${TIMEZONE_API_URL}?key=${TIMEZONE_API_KEY}&format=json&by=position&lat=${lat}&lng=${lon}`;
-  
+
   try {
-      const response = await fetch(url);
-      
-      // Verifica se a requisição foi bem-sucedida
-      if (response.ok) {
-          const data = await response.json();
-          console.log('Dados recebidos da API do Fuso Horário:', data);
-      } else {
-          console.error('Erro na API do Fuso Horário:', response.status, response.statusText);
-      }
+    const response = await fetch(url);
+
+    // Verifica se a requisição foi bem-sucedida
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Dados recebidos da API do Fuso Horário:", data);
+    } else {
+      console.error(
+        "Erro na API do Fuso Horário:",
+        response.status,
+        response.statusText
+      );
+    }
   } catch (error) {
-      console.error('Erro na API do Fuso Horário:', error);
+    console.error("Erro na API do Fuso Horário:", error);
   }
 }
 
-async function testUnsplashAPI(){
+async function testUnsplashAPI() {
   const cidade = "São Paulo";
 
-  const url = `${UNSPLASH_API_URL}?query=${encodeURI(cidade)}&client_id=${UNSPLASH_API_KEY};`
+  const url = `${UNSPLASH_API_URL}?query=${encodeURI(
+    cidade
+  )}&client_id=${UNSPLASH_API_KEY};`;
 
-  try{
+  try {
     const response = await fetch(url);
 
     //Verifica se a requisição foi bem sucedida
-    if(response.ok){
+    if (response.ok) {
       const data = await response.json();
-      console.log('Dados recedos da API do Unsplash:', data);
-    }else{
-      console.error('Error na API do Unsplash:', response.status,
-        response.statusText);
+      console.log("Dados recedos da API do Unsplash:", data);
+    } else {
+      console.error(
+        "Error na API do Unsplash:",
+        response.status,
+        response.statusText
+      );
     }
-  } catch (error){
-    console.error('Erro na API do Unsplash:', error);
+  } catch (error) {
+    console.error("Erro na API do Unsplash:", error);
   }
-  
+}
+
+async function testCountryAPI() {
+  const countryCode = "BR";
+  const url = `${COUNTRY_API_URL}${countryCode}`;
+
+  try {
+    const response = await fetch(url);
+
+    //Verifica se a requisição foi bem sucedida
+    if (response.ok) {
+      const data = await response.json();
+
+      //bandeira e nome
+      const countryInfo = {
+        name: data[0].name.common,
+        flag: data[0].flags.svg,
+      };
+      console.log("Dados recebidos da API de Países:", countryInfo);
+    } else {
+      console.error(
+        "Dados recebidos da API de Países:",
+        response.status,
+        response.statusText
+      );
+    }
+  } catch (error) {
+    console.error("Erro na API de Países:", error);
+  }
 }
 
 // ========== 3 Testar API ========== //
 testWeatherAPI();
 testTimezoneAPI();
 testUnsplashAPI();
+testCountryAPI();
