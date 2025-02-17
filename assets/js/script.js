@@ -19,30 +19,6 @@ const searchForm = document.querySelector("#search");
 
 // ========== 2 Funções de Teste ========== //
 
-async function testTimezoneAPI() {
-  const lat = -23.5505;
-  const lon = -46.6333;
-  const url = `${TIMEZONE_API_URL}?key=${TIMEZONE_API_KEY}&format=json&by=position&lat=${lat}&lng=${lon}`;
-
-  try {
-    const response = await fetch(url);
-
-    // Verifica se a requisição foi bem-sucedida
-    if (response.ok) {
-      const data = await response.json();
-      console.log("Dados recebidos da API do Fuso Horário:", data);
-    } else {
-      console.error(
-        "Erro na API do Fuso Horário:",
-        response.status,
-        response.statusText
-      );
-    }
-  } catch (error) {
-    console.error("Erro na API do Fuso Horário:", error);
-  }
-}
-
 async function testUnsplashAPI() {
   const cidade = "São Paulo";
 
@@ -105,6 +81,13 @@ async function fetchWeatherData(cityName) {
   return await response.json();
 }
 
+async function fetchTimezoneData(lat, lon) {
+  const url = `${TIMEZONE_API_URL}?key=${TIMEZONE_API_KEY}&format=json&by=position&lat=${lat}&lng=${lon}`;
+
+  const response = await fetch(url);
+  return await response.json();
+}
+
 // ========== 4 Evento de Busca ==========
 searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -112,9 +95,18 @@ searchForm.addEventListener("submit", async (e) => {
 
   if (cityName) {
     try {
+
       //Busca os dados do clima
       const weatherData = await fetchWeatherData(cityName);
       console.log("Dados do clima:", weatherData);
+
+      //Busca os dados do fuso horário
+      const timezoneData = await fetchTimezoneData(
+        weatherData.coord.lat,
+        weatherData.coord.lon
+      );
+      console.log("Dados do Fuso Horário:", timezoneData);
+      
     } catch (error) {
       console.error("Erro ao buscar os dados:", error);
       alert(
