@@ -17,62 +17,6 @@ const COUNTRY_API_URL = "https://restcountries.com/v3.1/alpha/";
 const cityInput = document.querySelector("#city_name");
 const searchForm = document.querySelector("#search");
 
-// ========== 2 Funções de Teste ========== //
-
-async function testUnsplashAPI() {
-  const cidade = "São Paulo";
-
-  const url = `${UNSPLASH_API_URL}?query=${encodeURI(
-    cidade
-  )}&client_id=${UNSPLASH_API_KEY};`;
-
-  try {
-    const response = await fetch(url);
-
-    //Verifica se a requisição foi bem sucedida
-    if (response.ok) {
-      const data = await response.json();
-      console.log("Dados recedos da API do Unsplash:", data);
-    } else {
-      console.error(
-        "Error na API do Unsplash:",
-        response.status,
-        response.statusText
-      );
-    }
-  } catch (error) {
-    console.error("Erro na API do Unsplash:", error);
-  }
-}
-
-async function testCountryAPI() {
-  const countryCode = "BR";
-  const url = `${COUNTRY_API_URL}${countryCode}`;
-
-  try {
-    const response = await fetch(url);
-
-    //Verifica se a requisição foi bem sucedida
-    if (response.ok) {
-      const data = await response.json();
-
-      //bandeira e nome
-      const countryInfo = {
-        name: data[0].name.common,
-        flag: data[0].flags.svg,
-      };
-      console.log("Dados recebidos da API de Países:", countryInfo);
-    } else {
-      console.error(
-        "Dados recebidos da API de Países:",
-        response.status,
-        response.statusText
-      );
-    }
-  } catch (error) {
-    console.error("Erro na API de Países:", error);
-  }
-}
 
 // ========== 3 Funções de Busca ==========
 async function fetchWeatherData(cityName) {
@@ -86,6 +30,24 @@ async function fetchTimezoneData(lat, lon) {
 
   const response = await fetch(url);
   return await response.json();
+}
+
+async function fetchCountryData(countryCode){
+const url = `${COUNTRY_API_URL}${countryCode}`;
+const response = await fetch(url);
+const data = await response.json();
+
+return{
+  name: data[0].name.common,
+  flag: data[0].name.svg
+};
+}
+
+async function fetchCityImage(cityName){
+  const url = `${UNSPLASH_API_URL}?query=${encodeURI(cityName)}&client_id=${UNSPLASH_API_KEY}`;
+  const response = await fetch(url);
+  const data  = await response.json();
+  return data.results.length > 0 ? data.results[0].urls.full : null;
 }
 
 // ========== 4 Evento de Busca ==========
@@ -106,6 +68,14 @@ searchForm.addEventListener("submit", async (e) => {
         weatherData.coord.lon
       );
       console.log("Dados do Fuso Horário:", timezoneData);
+
+      //Busca os dados do pais usando o codigo retorno pela api do clima
+      const countryData = await fetchCountryData (weatherData.sys.country);
+      console.log("Dados do país:", countryData);
+
+      //Busca a imagem da cidade
+      const cityImageUrl = await fetchCityImage(cityName);
+      console.log("Imagem da cidade:", cityImageUrl);
       
     } catch (error) {
       console.error("Erro ao buscar os dados:", error);
@@ -113,5 +83,7 @@ searchForm.addEventListener("submit", async (e) => {
         "Erro ao buscar os dados. Verifique o nome da cidade e tente novamente."
       );
     }
+  } else{
+    alert("Por favor, insira o nome de uma cidade.")
   }
 });
